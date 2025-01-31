@@ -2,11 +2,14 @@ package org.example.libreriakamel.DTO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -15,20 +18,29 @@ public class Usuario {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "dni", nullable = false, length = 15)
-    private String dni;
+    @Column(name = "dni", nullable = false, length = 15, unique = true)
+    @NotEmpty(message = "El DNI no puede estar vacío")
+    private String dni; // Se validará en el servicio.
 
     @Column(name = "nombre", nullable = false, length = 100)
+    @NotEmpty(message = "El nombre no puede estar vacío")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]{1,100}$", message = "El nombre solo puede contener caracteres alfanuméricos")
     private String nombre;
 
-    @Column(name = "email", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100, unique = true)
+    @NotEmpty(message = "El correo no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@gmail\\.com$", message = "Solo se aceptan correos de Gmail")
     private String email;
 
     @Column(name = "password", nullable = false)
+    @NotEmpty(message = "La contraseña no puede estar vacía")
+    @Size(min = 4, max = 12, message = "La contraseña debe tener entre 4 y 12 caracteres")
     private String password;
 
     @Lob
     @Column(name = "tipo", nullable = false)
+    @NotEmpty(message = "El tipo no puede estar vacío")
+    @Pattern(regexp = "^(normal|administrador)$", message = "El tipo debe ser: normal o administrador")
     private String tipo;
 
     @Column(name = "penalizacionHasta")
@@ -37,69 +49,4 @@ public class Usuario {
     @JsonManagedReference("prestamo-usuario")
     @OneToMany(mappedBy = "usuario")
     private Set<Prestamo> prestamos = new LinkedHashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public LocalDate getPenalizacionHasta() {
-        return penalizacionHasta;
-    }
-
-    public void setPenalizacionHasta(LocalDate penalizacionHasta) {
-        this.penalizacionHasta = penalizacionHasta;
-    }
-
-    public Set<Prestamo> getPrestamos() {
-        return prestamos;
-    }
-
-    public void setPrestamos(Set<Prestamo> prestamos) {
-        this.prestamos = prestamos;
-    }
-
 }

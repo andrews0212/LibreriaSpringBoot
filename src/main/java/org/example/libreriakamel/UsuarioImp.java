@@ -1,5 +1,6 @@
 package org.example.libreriakamel;
 
+import jakarta.validation.Valid;
 import org.example.libreriakamel.DTO.Ejemplar;
 import org.example.libreriakamel.DTO.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
+@Validated
 public class UsuarioImp {
     UsuarioRepositorio usuarioRepositorio;
     @Autowired
@@ -37,15 +39,11 @@ public class UsuarioImp {
     //POST --> INSERT
     @Transactional
     @PostMapping("/addUsuario")
-    public ResponseEntity<Usuario> addUsuario(@Validated @RequestBody Usuario Usuario){
+    public ResponseEntity<Usuario> addUsuario(@Valid @RequestBody Usuario Usuario){
         System.out.println("Entra aqui");
-        try {
             Usuario e = this.usuarioRepositorio.save(Usuario);
             return ResponseEntity.ok().body(e);
-        } catch (Exception ex) {
-            ex.printStackTrace();  // Esto te mostrará detalles del error
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+
     }
 
 

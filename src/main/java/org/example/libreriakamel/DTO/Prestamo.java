@@ -2,11 +2,13 @@ package org.example.libreriakamel.DTO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "prestamo")
 public class Prestamo {
@@ -33,45 +35,5 @@ public class Prestamo {
 
     @Column(name = "fechaDevolucion")
     private LocalDate fechaDevolucion;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public org.example.libreriakamel.DTO.Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(org.example.libreriakamel.DTO.Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Ejemplar getEjemplar() {
-        return ejemplar;
-    }
-
-    public void setEjemplar(Ejemplar ejemplar) {
-        this.ejemplar = ejemplar;
-    }
-
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public LocalDate getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
 
 }

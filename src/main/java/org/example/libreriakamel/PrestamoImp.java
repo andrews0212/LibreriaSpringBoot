@@ -1,8 +1,10 @@
 package org.example.libreriakamel;
 
+import jakarta.validation.Valid;
 import org.example.libreriakamel.DTO.Prestamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/prestamo")
+@Validated
 public class PrestamoImp {
     PrestamosRepositorio repositorio;
 
@@ -31,7 +34,7 @@ public class PrestamoImp {
     }
 
     @PostMapping("/addPrestamo")
-    public ResponseEntity<Prestamo> addPrestamo(@RequestBody Prestamo prestamo) {
+    public ResponseEntity<Prestamo> addPrestamo(@Valid @RequestBody Prestamo prestamo) {
         Prestamo prestamoPersistido = repositorio.save(prestamo);
         return ResponseEntity.ok().body(prestamoPersistido);
     }

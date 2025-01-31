@@ -1,5 +1,6 @@
 package org.example.libreriakamel;
 
+import jakarta.validation.Valid;
 import org.example.libreriakamel.DTO.Libro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/libros")
+@Validated
 public class LibroImp {
 
     LibroRepositorio libroRepositorio;
@@ -35,7 +37,7 @@ public class LibroImp {
 
     //POST --> INSERT
     @PostMapping("/libro")
-    public ResponseEntity<Libro> addLibro(@Validated @RequestBody Libro libro){
+    public ResponseEntity<Libro> addLibro(@Valid @RequestBody Libro libro){
         System.out.println("Entra aqui");
         Libro libroPersistido = this.libroRepositorio.save(libro);
         return ResponseEntity.ok().body(libroPersistido);

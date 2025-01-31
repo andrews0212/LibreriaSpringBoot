@@ -1,5 +1,6 @@
 package org.example.libreriakamel;
 
+import jakarta.validation.Valid;
 import org.example.libreriakamel.DTO.Ejemplar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/ejemplar")
+@Validated
 public class EjemplarImp {
 
     private LibroRepositorio libroRepositorio;
@@ -40,7 +42,7 @@ public class EjemplarImp {
     //POST --> INSERT
     @Transactional
     @PostMapping("/addEjemplar")
-    public ResponseEntity<Ejemplar> addEjemplar(@Validated @RequestBody Ejemplar ejemplar){
+    public ResponseEntity<Ejemplar> addEjemplar(@Valid @RequestBody Ejemplar ejemplar){
         System.out.println("Entra aqui");
         try {
             Ejemplar e = this.ejemplarRepositorio.save(ejemplar);
